@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portofolio — Muhamad Rifqi</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --white: #ffffff;
+      --off: #f7f7f5;
+      --soft: #f0efeb;
+      --line: #e5e4df;
+      --muted: #a8a79f;
+      --text: #1a1a18;
+      --accent: #2d5a3d;
+      --accent-light: #e8f0ea;
+      --accent2: #c17f3e;
+      --radius: 12px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: box-shadow var(--transition);
+    }
+    nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.06); }
+
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links { display: flex; gap: 0.25rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: color var(--transition), background var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 4px; left: 50%; right: 50%;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: left var(--transition), right var(--transition);
+    }
+    .nav-links a:hover { color: var(--text); background: var(--soft); }
+    .nav-links a:hover::after { left: 1rem; right: 1rem; }
+
+    .hero {
+      min-height: 100vh;
+      padding: 8rem 2rem 4rem;
+      display: flex;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero-inner { width: 100%; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s forwards;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.2s forwards;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.35s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.5s forwards;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.75rem 1.75rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+      border: none;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--text); color: var(--white); box-shadow: 0 4px 16px rgba(26,26,24,0.18); }
+    .btn-primary:hover { box-shadow: 0 8px 28px rgba(26,26,24,0.24); }
+    .btn-secondary { background: var(--soft); color: var(--text); border: 1px solid var(--line); }
+    .btn-secondary:hover { background: var(--line); }
+
+    section { max-width: 900px; margin: 0 auto; padding: 5rem 2rem; }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .section-line { width: 40px; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 3rem; }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .about-text p { color: #555; font-size: 1rem; line-height: 1.85; margin-bottom: 1rem; font-weight: 300; }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stat-card {
+      background: var(--off);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.07); border-color: var(--accent); }
+    .stat-num { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--text); line-height: 1; margin-bottom: 0.25rem; }
+    .stat-desc { font-size: 0.8rem; color: var(--muted); font-weight: 400; }
+
+    #skills { background: var(--off); border-radius: 20px; max-width: 900px; }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+    .skill-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      cursor: default;
+    }
+    .skill-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); border-color: var(--accent); }
+    .skill-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .skill-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .skill-bar-track { background: var(--soft); border-radius: 4px; height: 4px; overflow: hidden; }
+    .skill-bar-fill { height: 100%; border-radius: 4px; background: var(--accent); width: 0; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }
+    .skill-level { font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; font-family: 'DM Mono', monospace; }
+
+    .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+    .cert-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      background: var(--white);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .cert-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform var(--transition);
+    }
+    .cert-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); border-color: #d0d0c8; }
+    .cert-card:hover::before { transform: scaleX(1); }
+    .cert-issuer { font-size: 0.7rem; font-family: 'DM Mono', monospace; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .cert-name { font-weight: 600; font-size: 1rem; margin-bottom: 0.4rem; color: var(--text); }
+    .cert-date { font-size: 0.8rem; color: var(--muted); }
+    .cert-badge {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    /* ── CERT IMAGE SLOT ── */
+    .cert-img-slot {
+      margin-top: 1rem;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    .cert-img-slot img {
+      width: 100%;
+      max-height: 160px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .cert-img-slot:hover img { transform: scale(1.03); }
+
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 6px; bottom: 6px;
+      width: 1px;
+      background: var(--line);
+    }
+    .timeline-item { position: relative; padding-bottom: 2.5rem; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -2.375rem; top: 4px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--line);
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .timeline-item:hover .timeline-dot { border-color: var(--accent); background: var(--accent); }
+    .timeline-time { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); margin-bottom: 0.35rem; letter-spacing: 0.04em; }
+    .timeline-title { font-weight: 600; font-size: 1rem; margin-bottom: 0.3rem; }
+    .timeline-desc { font-size: 0.9rem; color: #666; line-height: 1.7; font-weight: 300; margin-bottom: 1rem; }
+
+    /* ── PROJECT IMAGE SLOT ── */
+    .project-img-slot {
+      margin-top: 0.75rem;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    .project-img-slot img {
+      width: 100%;
+      max-height: 280px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .project-img-slot:hover img { transform: scale(1.02); }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    .divider { max-width: 900px; margin: 0 auto; border: none; border-top: 1px solid var(--line); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 1rem; }
+      .hero { padding: 7rem 1.25rem 3rem; }
+      section { padding: 3.5rem 1.25rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .nav-links a { padding: 0.5rem 0.6rem; font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">Muhamad<span>.</span>Rifqi</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skill</a></li>
+      <li><a href="#sertifikat">Sertifikat</a></li>
+      <li><a href="#aktivitas">Aktivitas</a></li>
+    </ul>
+  </nav>
+
+  <div id="hero" class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">Tersedia untuk kolaborasi</div>
+      <h1>Halo, saya<br><em>Muhamad Rifqi</em></h1>
+      <p class="hero-desc">
+        seorang pelajar yang sedang mendalami dunia 3D art dengan fokus pada Blender. Saya menciptakan berbagai karya digital - mulai dari model 3D sederhana hingga render kompleks yang memadukan teknik sculpting, texturing, dan lighting. Dengan semangat belajar yang tinggi, saya terus mengeksplorasi berbagai aspek dalam 3D design untuk menghasilkan karya yang tidak hanya menarik secara visual, tetapi juga memiliki storytelling yang kuat.
+      </p>
+      <div class="hero-actions">
+        <a href="#about" class="btn btn-primary">Kenali Saya →</a>
+        <a href="#aktivitas" class="btn btn-secondary">Lihat Aktivitas</a>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <section id="about">
+    <div class="reveal">
+      <p class="section-label">01 — Tentang</p>
+      <h2 class="section-title">Siapa saya?</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>Saya adalah seorang pelajar di bidang teknologi dan desain.
+        Saya percaya bahwa desain yang baik bisa membuat orang kagum dan nyaman saat melihatnya.</p>
+        <p>Di luar layar, saya senang membaca, menjelajahi ide-ide baru, dan terus belajar hal-hal yang membuat dunia menjadi lebih baik.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card"><div class="stat-num">10+</div><div class="stat-desc">Proyek selesai</div></div>
+        <div class="stat-card"><div class="stat-num">3+</div><div class="stat-desc">Tahun belajar</div></div>
+        <div class="stat-card"><div class="stat-num">5+</div><div class="stat-desc">Sertifikat</div></div>
+        <div class="stat-card"><div class="stat-num">∞</div><div class="stat-desc">Semangat belajar</div></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section id="skills">
+    <div class="reveal">
+      <p class="section-label">02 — Kemampuan</p>
+      <h2 class="section-title">Skill saya</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal" data-level="88">
+        <div class="skill-icon">🧊</div>
+        <div class="skill-name">Blender 3D</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        <div class="skill-level">88%</div>
+      </div>
+      <div class="skill-card reveal" data-level="82">
+        <div class="skill-icon">🏗️</div>
+        <div class="skill-name">3D Modeling</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        <div class="skill-level">82%</div>
+      </div>
+      <div class="skill-card reveal" data-level="78">
+        <div class="skill-icon">💡</div>
+        <div class="skill-name">Lighting & Rendering</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        <div class="skill-level">78%</div>
+      </div>
+      <div class="skill-card reveal" data-level="75">
+        <div class="skill-icon">🎨</div>
+        <div class="skill-name">Texturing & Shading</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        <div class="skill-level">75%</div>
+      </div>
+      <div class="skill-card reveal" data-level="70">
+        <div class="skill-icon">🦴</div>
+        <div class="skill-name">Rigging & Animasi</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        <div class="skill-level">70%</div>
+      </div>
+      <div class="skill-card reveal" data-level="65">
+        <div class="skill-icon">✨</div>
+        <div class="skill-name">VFX & Simulasi</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        <div class="skill-level">65%</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section id="sertifikat">
+    <div class="reveal">
+      <p class="section-label">03 — Sertifikat</p>
+      <h2 class="section-title">Pencapaian</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="cert-grid">
+
+      <!-- ============================================================ -->
+      <!-- SERTIFIKAT 1: Dicoding                                       -->
+      <!-- ============================================================ -->
+      <div class="cert-card reveal">
+        <div class="cert-issuer">Dicoding</div>
+        <div class="cert-name">Belajar Dasar Pemrograman Web</div>
+        <div class="cert-date">2024–2025</div>
+        <div class="cert-badge">Verified</div>
+        <!-- ▼▼▼ GANTI src dengan nama file foto sertifikat kamu ▼▼▼ -->
+        <div class="cert-img-slot">
+         <img src="Web DIcoding.png" alt="Sertifikat Web Programming">
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- SERTIFIKAT 2: Game Jam                                       -->
+      <!-- ============================================================ -->
+    
+      <!-- ============================================================ -->
+      <!-- SERTIFIKAT 3: Coursera                                       -->
+      <!-- ============================================================ -->
+      <div class="cert-card reveal">
+        <div class="cert-issuer">IGDX</div>
+        <div class="cert-name">Belajar Dasar Coding</div>
+        <div class="cert-date">Desember 2024</div>
+        <div class="cert-badge">Verified</div>
+        <!-- ▼▼▼ GANTI src dengan nama file foto sertifikat kamu ▼▼▼ -->
+        <div class="cert-img-slot">
+          <img src="IGDX.png" alt="Sertifikat Coursera">
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- SERTIFIKAT 4: Cisco                                          -->
+      <!-- ============================================================ -->
+      <div class="cert-card reveal">
+        <div class="cert-issuer">Agate</div>
+        <div class="cert-name">Belajar Dasar Membuat Game</div>
+        <div class="cert-date">November 2025</div>
+        <div class="cert-badge">Verified</div>
+        <!-- ▼▼▼ GANTI src dengan nama file foto sertifikat kamu ▼▼▼ -->
+        <div class="cert-img-slot">
+          <img src="Agate.png" alt="Sertifikat Cisco">
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- SERTIFIKAT 5: FreeCodeCamp                                   -->
+      <!-- ============================================================ -->
+      <div class="cert-card reveal">
+        <div class="cert-issuer">GingerSun</div>
+        <div class="cert-name">Membuat Game</div>
+        <div class="cert-date">2025-2026</div>
+        <div class="cert-badge">Verified</div>
+        <!-- ▼▼▼ GANTI src dengan nama file foto sertifikat kamu ▼▼▼ -->
+        <div class="cert-img-slot">
+          <img src="Sertifikat Wikrama  .png" alt="Sertifikat FreeCodeCamp">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section id="aktivitas">
+    <div class="reveal">
+      <p class="section-label">04 — Aktivitas</p>
+      <h2 class="section-title">Yang sedang & pernah saya lakukan</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="timeline">
+
+      <!-- ============================================================ -->
+      <!-- AKTIVITAS 1                                                  -->
+      <!-- ============================================================ -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">PPLG XI-5</div>
+        <div class="timeline-title">Mendalami Blender & 3D Art</div>
+        <div class="timeline-desc">Fokus pada pembuatan aset 3D untuk portofolio dan pembelajaran.</div>
+        <!-- ▼▼▼ GANTI src dengan nama file foto kamu ▼▼▼ -->
+        <div class="project-img-slot">
+          <img src="Ruangab.png" alt="Mendalami Blender & 3D Art">
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- AKTIVITAS 2                                                  -->
+      <!-- ============================================================ -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">Tefa GameComm</div>
+        <div class="timeline-title">Membuat Meja Hakim dengan Blender</div>
+        <div class="timeline-desc">Membuat meja hakim karena terinspirasi oleh desain arsitektur klasik.</div>
+        <!-- ▼▼▼ GANTI src dengan nama file foto kamu ▼▼▼ -->
+        <div class="project-img-slot">
+          <img src="Meja Hakim.png" alt="Membuat Meja Hakim dengan Blender">
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- AKTIVITAS 3                                                  -->
+      <!-- ============================================================ -->
+    
+
+      <!-- ============================================================ -->
+      <!-- AKTIVITAS 4                                                  -->
+      <!-- ============================================================ -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">Tefa GameComm</div>
+        <div class="timeline-title">Workshop Motion Graphics</div>
+        <div class="timeline-desc">Membuat texture simple menggunakan object pisang.</div>
+        <!-- ▼▼▼ GANTI src dengan nama file foto kamu ▼▼▼ -->
+        <div class="project-img-slot">
+          <img src="Pisang.png" alt="Workshop Motion Graphics">
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- AKTIVITAS 5                                                  -->
+      <!-- ============================================================ -->
+  
+  </section>
+
+  <footer>
+    <p>Dibuat dengan ❤️ oleh <a href="#">Muhamad Rifqi</a> · 2026</p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+            const bar = entry.target.querySelector('.skill-bar-fill');
+            if (bar) bar.style.width = entry.target.dataset.level + '%';
+          }, i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    const sections = document.querySelectorAll('section, #hero');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--text)' : '';
+      });
+    });
+  </script>
+</body>
+</html>
